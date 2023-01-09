@@ -1,0 +1,27 @@
+version: '1.0'
+volumes:
+  ghost-volume:
+
+services:
+  ghost:
+    build: .
+    ports:
+      - 2368:2368
+    networks:
+      - ghost
+    restart: always
+    environment:
+      database__client: sqlite3
+      database__connection__filename: content/data/ghost.db
+      database__useNullAsDefault: true
+      database__debug: false
+      storage__active: s3
+      storage__s3__accessKeyId: <AWS_S3_KEY_ID>
+      storage__s3__secretAccessKey: <AWS_S3_ACCES_KEY>
+      storage__s3__region: us-east-1
+      storage__s3__bucket: <S3_BUCKET_NAME>
+      storage__s3__assetHost: <CLOUDFRONT_URL>
+      
+
+networks:
+  ghost:
